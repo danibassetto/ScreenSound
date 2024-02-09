@@ -42,7 +42,8 @@ public static class ArtistasExtensions
             return Results.Ok();
         });
 
-        app.MapDelete("/Artistas/{id}", ([FromServices] DAL<Artista> dal, int id) => {
+        app.MapDelete("/Artistas/{id}", ([FromServices] DAL<Artista> dal, int id) =>
+        {
             var artista = dal.RecuperarPor(a => a.Id == id);
             if (artista is null)
             {
@@ -53,14 +54,15 @@ public static class ArtistasExtensions
 
         });
 
-        app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] ArtistaRequestEdit artistaRequestEdit) => {
+        app.MapPut("/Artistas", ([FromServices] DAL<Artista> dal, [FromBody] ArtistaRequestEdit artistaRequestEdit) =>
+        {
             var artistaAAtualizar = dal.RecuperarPor(a => a.Id == artistaRequestEdit.Id);
             if (artistaAAtualizar is null)
             {
                 return Results.NotFound();
             }
             artistaAAtualizar.Nome = artistaRequestEdit.nome;
-            artistaAAtualizar.Bio = artistaRequestEdit.bio;        
+            artistaAAtualizar.Bio = artistaRequestEdit.bio;
             dal.Atualizar(artistaAAtualizar);
             return Results.Ok();
         });
@@ -77,5 +79,5 @@ public static class ArtistasExtensions
         return new ArtistaResponse(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil);
     }
 
-  
+
 }

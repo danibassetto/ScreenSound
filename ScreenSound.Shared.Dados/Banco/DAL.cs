@@ -1,9 +1,5 @@
-﻿using ScreenSound.Modelos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ScreenSound.Banco;
 public class DAL<T> where T : class
@@ -15,9 +11,15 @@ public class DAL<T> where T : class
         this.context = context;
     }
 
-    public IEnumerable<T> Listar()
+    public IEnumerable<T> Listar(params Expression<Func<T, object>>[]? includes)
     {
-        return context.Set<T>().ToList();
+        IQueryable<T> query = context.Set<T>();
+
+        if (includes is not null)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        return query.ToList();
     }
     public void Adicionar(T objeto)
     {
@@ -35,8 +37,14 @@ public class DAL<T> where T : class
         context.SaveChanges();
     }
 
-    public T? RecuperarPor(Func<T, bool> condicao)
+    public T? RecuperarPor(Func<T, bool> condicao, params Expression<Func<T, object>>[]? includes)
     {
-        return context.Set<T>().FirstOrDefault(condicao);
+        IQueryable<T> query = context.Set<T>();
+        
+        if (includes is not null)
+            foreach (var include in includes)
+                query = query.Include(include);
+
+        return query.FirstOrDefault(condicao);
     }
 }

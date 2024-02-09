@@ -44,8 +44,9 @@ void ExibirOpcoesDoMenu()
     {
         Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
         menuASerExibido.Executar(artistaDAL);
-        if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
-    } 
+        if (opcaoEscolhidaNumerica > 0)
+            ExibirOpcoesDoMenu();
+    }
     else
     {
         Console.WriteLine("Opção inválida");

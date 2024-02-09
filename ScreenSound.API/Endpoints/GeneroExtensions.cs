@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using ScreenSound.API.Requests;
 using ScreenSound.API.Response;
 using ScreenSound.Banco;
@@ -58,6 +57,6 @@ public static class GeneroExtensions
 
     private static GeneroResponse EntityToResponse(Genero genero)
     {
-        return new GeneroResponse(genero.Id,genero.Nome!, genero.Descricao!);
+        return new GeneroResponse(genero.Id, genero.Nome!, genero.Descricao!);
     }
 }

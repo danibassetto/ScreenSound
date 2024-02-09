@@ -3,7 +3,7 @@ using ScreenSound.Modelos;
 using ScreenSound.Shared.Modelos.Modelos;
 
 namespace ScreenSound.Banco;
-public class ScreenSoundContext: DbContext
+public class ScreenSoundContext : DbContext
 {
     public DbSet<Artista> Artistas { get; set; }
     public DbSet<Musica> Musicas { get; set; }
@@ -14,8 +14,7 @@ public class ScreenSoundContext: DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder
-            .UseSqlServer(connectionString)
-            .UseLazyLoadingProxies();
+            .UseSqlServer(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,5 +23,4 @@ public class ScreenSoundContext: DbContext
             .HasMany(c => c.Generos)
             .WithMany(c => c.Musicas);
     }
-
 }

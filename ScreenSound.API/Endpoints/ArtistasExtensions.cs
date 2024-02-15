@@ -10,7 +10,6 @@ public static class ArtistasExtensions
 {
     public static void AddEndPointsArtistas(this WebApplication app)
     {
-
         #region Endpoint Artistas
         app.MapGet("/Artistas", ([FromServices] DAL<Artista> dal) =>
         {
@@ -78,6 +77,4 @@ public static class ArtistasExtensions
     {
         return new ArtistaResponse(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil);
     }
-
-
 }

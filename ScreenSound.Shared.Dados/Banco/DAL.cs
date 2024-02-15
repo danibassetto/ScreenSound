@@ -40,7 +40,7 @@ public class DAL<T> where T : class
     public T? RecuperarPor(Func<T, bool> condicao, params Expression<Func<T, object>>[]? includes)
     {
         IQueryable<T> query = context.Set<T>();
-        
+
         if (includes is not null)
             foreach (var include in includes)
                 query = query.Include(include);

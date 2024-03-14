@@ -1,20 +1,24 @@
 ﻿@page "/Artistas"
-@inject ArtistaAPI artistaAPI
+@inject ArtistaAPI artistasAPI
+
 <h3>Artistas</h3>
 @if (artistas is not null)
 {
-    foreach (var artista in artistas)
-    {
-        <p>@artista.Nome</p>
-    }
+    <MudGrid>
+        @foreach (var artista in artistas)
+        {
+            <MudItem xs="3">
+              <CardArtista Artista="artista" />
+            </MudItem>
+        }
+    </MudGrid>
 }
 
-
 @code {
-    private ICollection<ArtistaResponse>? artistas { get; set; }
+    private ICollection<ArtistaResponse>? artistas;
 
     protected override async Task OnInitializedAsync()
     {
-        artistas = await artistaAPI.GetArtistasAsync();
+        artistas = await artistasAPI.GetArtistasAsync();
     }
 }

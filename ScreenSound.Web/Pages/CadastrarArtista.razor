@@ -1,0 +1,15 @@
+﻿@page "/CadastrarArtista"
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+    <MudText Class="mt-8" Typo="Typo.h4">Cadastro de Artistas</MudText>
+    <MudForm>
+        <MudTextField Class="mt-4" T="string" Placeholder="Nome" Variant="Variant.Outlined" Required="true" RequiredError="Campo Obrigatório." />
+        <MudTextField Class="mt-4" T="string" Placeholder="Biografia" Variant="Variant.Outlined" Lines="4" Required="true" RequiredError="Campo Obrigatório" />
+        <div class="d-flex align-center justify-space-between mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Cadastrar</MudButton>
+        </div>
+    </MudForm>
+</MudPaper>
+
+@code{
+
+}

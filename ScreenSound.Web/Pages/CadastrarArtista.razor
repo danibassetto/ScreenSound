@@ -1,15 +1,31 @@
 ﻿@page "/CadastrarArtista"
+@inject ArtistaAPI artistaAPI
+@inject NavigationManager navigationManager
 <MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
     <MudText Class="mt-8" Typo="Typo.h4">Cadastro de Artistas</MudText>
     <MudForm>
-        <MudTextField Class="mt-4" T="string" Placeholder="Nome" Variant="Variant.Outlined" Required="true" RequiredError="Campo Obrigatório." />
-        <MudTextField Class="mt-4" T="string" Placeholder="Biografia" Variant="Variant.Outlined" Lines="4" Required="true" RequiredError="Campo Obrigatório" />
-        <div class="d-flex align-center justify-space-between mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Cadastrar</MudButton>
+        <MudTextField Class="mt-4" T="string" Placeholder="Nome" Variant="Variant.Outlined" @bind-Value="nome" Required="true" RequiredError="Campo Obrigatório." />
+        <MudTextField Class="mt-4" T="string" Placeholder="Biografia" Variant="Variant.Outlined" @bind-Value="biografia" Lines="4" Required="true" RequiredError="Campo Obrigatório" />
+        <div class="d-flex justify-space-between mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Voltar">Voltar</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Cadastrar">Cadastrar</MudButton>
         </div>
     </MudForm>
 </MudPaper>
 
-@code{
+@code {
+    private string? nome;
+    private string? biografia;
 
+    private async Task Cadastrar()
+    {
+        var request = new ArtistaRequest(nome!, biografia!);
+        await artistaAPI.AddArtistaAsync(request);
+        navigationManager.NavigateTo("/Artistas");
+    }
+
+    private void Voltar()
+    {
+        navigationManager.NavigateTo("/Artistas");
+    }
 }

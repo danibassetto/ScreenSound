@@ -1,6 +1,50 @@
-﻿@page "/EditarArtista"
-<h3>Editar artista</h3>
+﻿@page "/EditarArtista/{nomeArtista}"
+@inject ArtistaAPI artistaAPI
+@inject NavigationManager navigationManager
+
+<MudPaper Class="px-8 pt-2 pb-4 mx-12 my-8" Justify="Justify.Center">
+    <MudText Class="mt-8" Typo="Typo.h4">Edição de Artistas</MudText>
+    <MudForm>
+        <MudTextField Class="mt-4" T="string" Placeholder="Nome" Variant="Variant.Outlined" @bind-Value="nome" Required="true" RequiredError="Campo Obrigatório." />
+        <MudTextField Class="mt-4" T="string" Placeholder="Biografia" Variant="Variant.Outlined" @bind-Value="biografia" Lines="4" Required="true" RequiredError="Campo Obrigatório" />
+        <div class="d-flex justify-space-between mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="Voltar">Voltar</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="Editar">Salvar</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" @onclick="Deletar">Excluir</MudButton>
+        </div>
+    </MudForm>
+</MudPaper>
 
 @code {
+    private string? nome;
+    private string? biografia;
+    [Parameter]
+    public string? NomeArtista { get; set; }
 
+    public ArtistaResponse? Artista { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Artista = await artistaAPI.GetArtistaPorNomeAsync(NomeArtista!);
+        nome = Artista?.Nome;
+        biografia = Artista?.Bio;
+    }
+
+    private async Task Editar()
+    {
+        var requestEdit = new ArtistaRequestEdit(Artista!.Id, nome!, biografia!);
+        await artistaAPI.UpdateArtistaAsync(requestEdit);
+        navigationManager.NavigateTo("/Artistas");
+    }
+
+    private async Task Deletar()
+    {
+        await artistaAPI.DeleteArtistaAsync(Artista!.Id);
+        navigationManager.NavigateTo("/Artistas");
+    }
+
+    private void Voltar()
+    {
+        navigationManager.NavigateTo("/Artistas");
+    }
 }
